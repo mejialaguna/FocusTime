@@ -16,18 +16,30 @@ export function Timer({ focusSubject, clearSubject, onTimerEnd }) {
   const [minutes, setMinutes] = useState(0.1);
   console.log({ progress });
 
-  const ONE_SECOND_IN_MS = 1000;
+  // const ONE_SECOND_IN_MS = 1000;
 
-  const PATTERN = [
-    1 * ONE_SECOND_IN_MS,
-    1 * ONE_SECOND_IN_MS,
-    1 * ONE_SECOND_IN_MS,
-    1 * ONE_SECOND_IN_MS,
-    1 * ONE_SECOND_IN_MS,
-  ];
+  // const PATTERN = [
+  //   1 * ONE_SECOND_IN_MS,
+  //   1 * ONE_SECOND_IN_MS,
+  //   1 * ONE_SECOND_IN_MS,
+  //   1 * ONE_SECOND_IN_MS,
+  //   1 * ONE_SECOND_IN_MS,
+  // ];
+
+
+  const vibrate = () => {
+    if (Platform.OS === "android") {
+      const interval = setInterval(() => Vibration.vibrate(), 1000);
+      setTimeout(() => clearInterval(interval), 10000);
+    } else {
+      Vibration.vibrate(1000);
+    }
+  };
+
 
   function onEnd(reset) {
-    Vibration.vibrate(PATTERN);
+    // Vibration.vibrate(PATTERN);
+     vibrate();
     setIsStarted(false);
     setProgress(1);
     reset();
